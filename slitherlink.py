@@ -42,6 +42,7 @@ class SlitherlinkState:
 class Board:
     """Representação interna de um tabuleiro de Slitherlink."""
 
+    """Construtor do tabueiro."""
     def __init__(self, board:list):
         self.board = board
         self.height = len(board)
@@ -55,9 +56,9 @@ class Board:
 
     def get_cell_edges(self, row:int, column:int) -> list:
         """Devolve os arestas da célula enviada no argumento"""
-        #TODO
-        pass
-
+        result = [('h', row, column), ('h', row+1, column), ('v', row, column), ('v', row, column+1)] if (row >= 1 and row <= self.height and column >= 1 and column <= self.width) else []
+        return result
+    
     def get_active_edges(self, row:int, column:int) -> list:
         """Devolve o número de arestas ativas"""
         #TODO
@@ -91,7 +92,7 @@ class Slitherlink(Problem):
         for i in range(board.height):
             self.board.append([])
             for j in range(board.width):
-                self.board[i].append(bin(0)[2:].zfill(4)) 
+                self.board[i].append(bin(0)[2:].zfill(4)) # Inicializa o tabuleiro com todas as arestas inativas
         self.rules = board.board
         # TODO
         pass
@@ -131,8 +132,8 @@ if __name__ == "__main__":
     # TODO:
     # Ler o ficheiro do standard input,
     board = Board.parse_instance()
-    problema = Slitherlink(board)
-    print("Tabuleiro inicial:\n{}".format(problema.board))
+    print(board.get_cell_edges(6,6))
+    print(board.get_cell_edges(4,4))
     # Usar uma técnica de procura para resolver a instância,
     # Retirar a solução a partir do nó resultante,
     # Imprimir para o standard output no formato indicado.
